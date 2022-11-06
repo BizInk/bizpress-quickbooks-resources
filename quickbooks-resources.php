@@ -56,3 +56,30 @@ function quickbooks_content( $types ) {
 	return $types;
 }
 add_filter( 'bizink-content-types', 'quickbooks_content' );
+
+if( !function_exists( 'bizink_get_quickbooks_page_object' ) ){
+	function bizink_get_quickbooks_page_object(){
+		$post_id = cxbc_get_option( 'bizink-client_basic', 'quickbooks_content_page' );
+		$post = get_post( $post_id );
+		return $post;
+	}
+}
+
+add_action( 'init', 'bizink_quickbooks_init');
+function bizink_quickbooks_init(){
+	$post = bizink_get_quickbooks_page_object();
+	if( is_object( $post ) && get_post_type( $post ) == "page" ){
+		add_rewrite_tag('%'.$post->post_name.'%', '([^&]+)', 'bizpress=');
+		add_rewrite_rule('^'.$post->post_name . '/([^/]+)/?$','index.php?pagename=' . $post->post_name . '&bizpress=$matches[1]','top');
+		add_rewrite_rule("^".$post->post_name."/([a-z0-9-]+)[/]?$",'index.php?pagename='.$post->post_name.'&bizpress=$matches[1]','top');
+		add_rewrite_rule("^".$post->post_name."/topic/([a-z0-9-]+)[/]?$",'index.php?pagename='.$post->post_name.'&topic=$matches[1]','top');
+		add_rewrite_rule("^".$post->post_name."/type/([a-z0-9-]+)[/]?$" ,'index.php?pagename='.$post->post_name.'&type=$matches[1]','top');
+		//flush_rewrite_rules();
+	}
+}
+
+add_filter('query_vars', 'bizpress_quickbooks_qurey');
+function bizpress_quickbooks_qurey($vars) {
+    $vars[] = "bizpress";
+    return $vars;
+}
