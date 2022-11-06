@@ -53,7 +53,6 @@ function quickbooks_content( $types ) {
 		'key' 	=> 'quickbooks_content_page',
 		'type'	=> 'quickbooks-content'
 	];
-
 	return $types;
 }
 add_filter( 'bizink-content-types', 'quickbooks_content' );
