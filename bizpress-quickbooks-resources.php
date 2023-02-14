@@ -5,7 +5,7 @@
  * Plugin URI: https://bizinkonline.com
  * Author: Bizink
  * Author URI: https://bizinkonline.com
- * Version: 1.2
+ * Version: 1.2.1
  * Text Domain: bizink-client-quickbooks
  * Domain Path: /languages
  */
@@ -19,7 +19,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Plugin Updater
 require 'plugin-update-checker/plugin-update-checker.php';
-$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker('https://github.com/BizInk/bizpress-quickbooks-resources',__FILE__,'bizpress-quickbooks-resources');
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+$myUpdateChecker = PucFactory::buildUpdateChecker('https://github.com/BizInk/bizpress-quickbooks-resources',__FILE__,'bizpress-quickbooks-resources');
 // Set the branch that contains the stable release.
 $myUpdateChecker->setBranch('master');
 // Using a private repository, specify the access token 
