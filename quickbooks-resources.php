@@ -13,9 +13,9 @@ function quickbooks_settings_fields( $fields, $section ) {
 	if('bizink-client_basic' == $section['id']){
 		$fields['quickbooks_content_page'] = array(
 			'id'      => 'quickbooks_content_page',
-			'label'     => __( 'Bizink Client Quickbooks', 'bizink-client' ),
+			'label'     => __( 'Quickbooks Resources', 'bizink-client' ),
 			'type'      => 'select',
-			'desc'      => __( 'Select the page to show the content. This page must contain the <code>[bizink-content]</code> shortcode.', 'bizink-client' ),
+			'desc'      => __( 'Select the page to show the content. This page must contain the <code>[bizpress-content]</code> shortcode.', 'bizink-client' ),
 			'options'	=> cxbc_get_posts( [ 'post_type' => 'page' ] ),
 			// 'chosen'	=> true,
 			'required'	=> false,
@@ -25,21 +25,21 @@ function quickbooks_settings_fields( $fields, $section ) {
 	if('bizink-client_content' == $section['id']){
 		$fields['quickbooks_label'] = array(
 			'id' => 'quickbooks',
-	        'label'	=> __( 'Bizink Client Quickbooks', 'bizink-client' ),
+	        'label'	=> __( 'Bizpress Quickbooks Resources', 'bizink-client' ),
 	        'type' => 'divider'
 		);
 		$fields['quickbooks_title'] = array(
 			'id' => 'quickbooks_title',
-			'label'     => __( 'Quickbooks Title', 'bizink-client' ),
+			'label'     => __( 'Quickbooks Resources Title', 'bizink-client' ),
 			'type'      => 'text',
-			'default'   => __( 'Quickbooks Resources', 'bizink-client' ),
+			'default'   => __( 'Quickbooks Resources Resources', 'bizink-client' ),
 			'required'	=> true,
 		);
 		$fields['quickbooks_desc'] = array(
 			'id'      	=> 'quickbooks_desc',
-			'label'     => __( 'Quickbooks Description', 'bizink-client' ),
+			'label'     => __( 'Quickbooks Resources Description', 'bizink-client' ),
 			'type'      => 'textarea',
-			'default'   => __( 'Free resources to help you use Quickbooks.', 'bizink-client' ),
+			'default'   => __( 'Free resources to help you use Quickbooks Resources.', 'bizink-client' ),
 			'required'	=> true,
 		);
 	}
@@ -70,10 +70,10 @@ function bizink_quickbooks_init(){
 	$post = bizink_get_quickbooks_page_object();
 	if( is_object( $post ) && get_post_type( $post ) == "page" ){
 		add_rewrite_tag('%'.$post->post_name.'%', '([^&]+)', 'bizpress=');
-		add_rewrite_rule('^'.$post->post_name . '/([^/]+)/?$','index.php?pagename=' . $post->post_name . '&bizpress=$matches[1]','top');
-		add_rewrite_rule("^".$post->post_name."/([a-z0-9-]+)[/]?$",'index.php?pagename='.$post->post_name.'&bizpress=$matches[1]','top');
-		add_rewrite_rule("^".$post->post_name."/topic/([a-z0-9-]+)[/]?$",'index.php?pagename='.$post->post_name.'&topic=$matches[1]','top');
-		add_rewrite_rule("^".$post->post_name."/type/([a-z0-9-]+)[/]?$" ,'index.php?pagename='.$post->post_name.'&type=$matches[1]','top');
+		add_rewrite_rule('^'.$post->post_name . '/([^/]+)/?$','index.php?pagename=quickbooks-resources&bizpress=$matches[1]','top');
+		add_rewrite_rule("^".$post->post_name."/([a-z0-9-]+)[/]?$",'index.php?pagename=quickbooks-resources&bizpress=$matches[1]','top');
+		add_rewrite_rule("^".$post->post_name."/topic/([a-z0-9-]+)[/]?$",'index.php?pagename=quickbooks-resources&topic=$matches[1]','top');
+		add_rewrite_rule("^".$post->post_name."/type/([a-z0-9-]+)[/]?$" ,'index.php?pagename=quickbooks-resources&type=$matches[1]','top');
 		//flush_rewrite_rules();
 	}
 }
