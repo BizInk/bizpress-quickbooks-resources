@@ -15,18 +15,29 @@ function bizpress_quickbooks_post_states( $post_states, $post ) {
 }
 
 function quickbooks_settings_fields( $fields, $section ) {
-
-	//if ( 'bizink-client_basic' != $section['id'] ) return $fields;
+	$pageselect = false;
+	if(defined('CXBPC')){
+		$bizpress = get_plugin_data( CXBPC );
+		$v = intval(str_replace('.','',$bizpress['Version']));
+		if($v >= 151){
+			$pageselect = true;
+		}
+	}
 	
 	if('bizink-client_basic' == $section['id']){
 		$fields['quickbooks_content_page'] = array(
 			'id'      => 'quickbooks_content_page',
 			'label'     => __( 'Quickbooks Resources', 'bizink-client' ),
-			'type'      => 'select',
+			'type'      => $pageselect ? 'pageselect':'select',
 			'desc'      => __( 'Select the page to show the content. This page must contain the <code>[bizpress-content]</code> shortcode.', 'bizink-client' ),
 			'options'	=> cxbc_get_posts( [ 'post_type' => 'page' ] ),
-			// 'chosen'	=> true,
 			'required'	=> false,
+			'default_page' => [
+				'post_title' => 'Quickbooks Resources',
+				'post_content' => '[bizpress-content]',
+				'post_status' => 'publish',
+				'post_type' => 'page'
+			]
 		);
 	}
 	
