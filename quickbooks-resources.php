@@ -7,6 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 add_filter( 'display_post_states', 'bizpress_quickbooks_post_states', 10, 2 );
 function bizpress_quickbooks_post_states( $post_states, $post ) {
+	if( !function_exists( 'cxbc_get_option' ) ) return $post_states;
 	$quickbooksPageID =  cxbc_get_option( 'bizink-client_basic', 'quickbooks_content_page' );
     if ( $quickbooksPageID == $post->ID ) {
         $post_states['bizpress_quickbooks'] = __('BizPress Quickbooks Resources','bizink-client');
@@ -78,6 +79,7 @@ add_filter( 'bizink-content-types', 'quickbooks_content' );
 
 if( !function_exists( 'bizink_get_quickbooks_page_object' ) ){
 	function bizink_get_quickbooks_page_object(){
+		if( !function_exists( 'cxbc_get_option' ) ) return false;
 		$post_id = cxbc_get_option( 'bizink-client_basic', 'quickbooks_content_page' );
 		$post = get_post( $post_id );
 		return $post;
