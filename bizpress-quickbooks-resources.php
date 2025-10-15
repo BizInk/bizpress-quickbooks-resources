@@ -5,7 +5,7 @@
  * Plugin URI: https://bizinkonline.com
  * Author: Bizink
  * Author URI: https://bizinkonline.com
- * Version: 1.3.6
+ * Version: 1.3.7
  * Text Domain: bizink-client-quickbooks
  * Domain Path: /languages
  */

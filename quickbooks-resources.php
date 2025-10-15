@@ -64,6 +64,21 @@ function quickbooks_settings_fields( $fields, $section ) {
 		);
 	}
 
+	if('bizpress_seo' == $section['id']){
+		$fields['quickbooks'] = array(
+            'id' => 'quickbooks',
+            'label'	=> __( 'Quickbooks Resources', 'bizink-client' ),
+            'type' => 'divider'
+        );
+		$fields['quickbooks_sitemap'] = array(
+            'id' => 'quickbooks_sitemap',
+            'label'	=> __( 'Enable Sitemap - Quickbooks Resources', 'bizink-client' ),
+            'type' => 'switch',
+			'default' => 'off',
+			'desc' => __( 'Enable the sitemap for the Quickbooks resources page.', 'bizink-client' ),
+        );
+	}
+
 	return $fields;
 }
 add_filter( 'cx-settings-fields', 'quickbooks_settings_fields', 10, 2 );
@@ -157,6 +172,11 @@ function bizpress_quickbooksxml_query($vars) {
 }
 
 function bizpress_quickbooks_sitemap_custom_items( $sitemap_custom_items ) {
+	$enable_sitemap = cxbc_get_option( 'bizpress_seo', 'quickbooks_sitemap', true );
+	if ( ( $enable_sitemap == 'off' || $enable_sitemap == 0 || $enable_sitemap == false ) && $enable_sitemap != 1 ) {
+		return $sitemap_custom_items;
+	}
+
     $sitemap_custom_items .= '
 	<sitemap>
 		<loc>'.get_home_url().'/quickbooks_resources.xml</loc>
